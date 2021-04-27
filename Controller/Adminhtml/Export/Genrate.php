@@ -98,7 +98,6 @@ class Genrate extends \Magento\Backend\App\Action
         }
         $this->downloadCsv($outputFile);
 
-        print_r($outputFile); die;
         return $outputFile;
     }
 

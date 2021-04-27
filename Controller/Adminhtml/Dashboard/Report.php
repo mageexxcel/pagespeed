@@ -34,7 +34,6 @@ class Report extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        die("eee");
         $resultPage = $this->resultPageFactory->create();
         $resultPage->getConfig()->getTitle()->set(__('PageSpeed Report'));
         if (!($this->isEnabled && $this->isAppKeyAndSecretSet)) {
