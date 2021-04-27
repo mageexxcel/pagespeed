@@ -1,0 +1,39 @@
+<?php  $helper = $this->helper('Excellence\PageSpeed\Helper\Data'); ?>
+<?php $speedInfo = $helper->getPageSpeedCollection(); ?>
+<?php $storeEmail = $helper->getStoreEmail(); ?>
+<?php $storeName = $helper->getStoreName(); ?>
+
+<table>
+  <tr class="email-intro">
+      <td>
+          <p><?= __("Thank you for using Excellence PageSpeed extension in your store.") ?></p>
+          <p><?= __("If you have questions about the extension or facing any issue, you can email us at") ?> <a href="<?= __("mailto:%1",$storeEmail)?>"><?= __($storeName)?> </a>.</p>
+      </td>
+  </tr>
+  <tr class="email-summary">
+      <td><h1><?= __("Latest PageSpeed Report") ?></h1></td>
+  </tr>
+  <tr class="email-information">
+    <p class="report-date-para" style="margin-bottom: 15px!important;"><?= __("Report Generated On : ") ?><span class="report-date" style="font-weight: 800;"><?= $speedInfo['created_at'];?></span></p>
+    <table class="pagespeed-report-details" border='1' style="margin-top:15px!important;">
+        <tr>
+            <th class="performance-details">
+                <h3 style="padding-left: 10px;"><?= __("Performance Scores") ?></h3>
+            </th>
+            <th class="page-details">
+                <h3 style="padding-left: 10px;"><?= __("Page Details") ?></h3>
+            </th>
+        </tr>
+        <tr>
+            <td class="pagespeed-score-details" style="padding-left: 10px;">
+                <p><?= __("PageSpeed Score : ") ?><span class="data" style="font-weight: 600;"><?= $speedInfo['pagespeed_score'];?></span></p>
+                <p><?= __("YSlow Score : ") ?><span class="data" style="font-weight: 600;"><?= $speedInfo['yslow_score'];?></span></p>
+            </td>
+            <td class="fully-loaded-time-details" style="padding-left: 10px;">
+                <p><?= __("Fully Loaded Time : ") ?><span class="data" style="font-weight: 600;"><?= $speedInfo['fully_loaded_time'];?></span></p>
+                <p><?= __("Page Load Time : ") ?><span class="data" style="font-weight: 600;"><?= $speedInfo['page_load_time'];?></span></p>
+            </td>
+        </tr>
+    </table>
+  </tr>
+</table>

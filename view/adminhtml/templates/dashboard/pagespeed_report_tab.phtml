@@ -1,0 +1,71 @@
+<?php
+$helper = $this->helper('Excellence\Pagespeed\Helper\Data');
+
+$speedCollections = $helper->getSpeedInfo(7);?>
+<?php if($speedCollections):?>
+    <?php
+        foreach ($speedCollections as $speedCollection) {
+            $formattedDate = $helper->formatDate($speedCollection['created_at']);
+            $date[] = "$formattedDate";
+            $ySlow[] = (int)$speedCollection['yslow_score'];
+            $pagescore[] = (int)$speedCollection['pagespeed_score'];
+        }
+    ?>
+    <div id="containeryyy" style="max-height: 400px"></div>
+    <script type="text/javascript">
+        require(['jquery', 'highcharts',
+            'exporting',
+            'accessibility'], function ($, Highcharts, Exporting, Accessibility) {
+            $(document).ready(function ($) {
+                var collection;
+
+                var dateArray = '<?= implode(",",$date) ?>';
+                dateArray = dateArray.split(",");
+
+                var ySlowCoreTimeArray = '<?= implode(",",$ySlow) ?>';
+                ySlowCoreTimeArray = ySlowCoreTimeArray.split(",");
+                ySlowCoreTime = getCollectionArray(ySlowCoreTimeArray);
+
+                var pageLoadTimeArray = '<?= implode(",",$pagescore) ?>';
+                pageLoadTimeArray = pageLoadTimeArray.split(",");
+                pageLoadTimeArray = getCollectionArray(pageLoadTimeArray);
+
+                Highcharts.chart('containeryyy', {
+                    chart: {
+                        type: 'line'
+                    },
+                    title: {
+                        text: 'Excellence PageSpeed Optimization Report'
+                    },
+                    xAxis: {
+                        categories: dateArray
+                    },
+                    yAxis: {
+                        lineColor: 'black',
+                        lineWidth: 4,
+                        title: true,
+                        tickInterval: 5,
+                        breaks: [{
+                            from: 50,
+                            to: 100
+                        }]
+                    },
+                    series: [{
+                        name: 'YSlow Score',
+                        data: ySlowCoreTime
+                    }, {
+                        name: 'Page Load Time',
+                        data: pageLoadTimeArray
+                    }]
+                });
+                function getCollectionArray(data){
+                    collection = [];
+                    data.map(data => {
+                        collection.push( parseInt(data) )
+                    });
+                    return collection;
+                }
+            });
+        });
+    </script>
+<?php endif;?>

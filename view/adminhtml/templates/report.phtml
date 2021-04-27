@@ -1,0 +1,106 @@
+<form action="<?= $block->getUrl('pagestatic/export/genrate') ?>" method="get" id="report_form">
+    <?php echo $block->getBlockHtml('formkey');?>
+    <fieldset class="fieldset admin__fieldset " id="pagespeed_report_base_fieldset">
+        <legend class="admin__legend legend">
+            <span><?= __("Export Your PageSpeed Data") ?></span>
+        </legend>
+
+        <div class="admin__field field field-to admin__field-small required _required">
+            <label class="label admin__field-label">
+                <?= __("From Date :") ?>
+            </label>
+            <div class="admin__field-control control" bis_skin_checked="1">
+                <input type="text" class="input-text" id="from-date" name="report-from-date" />
+            </div>
+        </div>
+
+        <div class="admin__field field field-to admin__field-small required _required">
+            <label class="label admin__field-label">
+                <?= __("To Date :") ?>
+            </label>
+            <div class="admin__field-control control" bis_skin_checked="1">
+                <input type="text" class="input-text" id="to-date" name="report-to-date" />
+            </div>
+        </div>
+
+        <div bis_skin_checked="1">
+            <button id="pagespeed_form_submit" title="Show Report" type="button" class="action-default scalable primary">
+                <span><?= __("Download Report") ?></span>
+            </button>
+        </div>
+    </fieldset>
+</form>
+
+<style>
+form#report_form fieldset#pagespeed_report_base_fieldset input#from-date, 
+form#report_form fieldset#pagespeed_report_base_fieldset input#to-date {
+  display: inline-block;
+  float: left;
+  line-height: 28px;
+  width: 250px;
+  padding-left: 10px;
+}
+button#pagespeed_form_submit {
+    margin-left: 25.6%;
+    width: 250px;
+    height: 40px;
+}
+form#report_form fieldset#pagespeed_report_base_fieldset legend.admin__legend.legend {
+    border-bottom: 1px solid #8080804a;
+    padding-bottom: 10px;
+}
+div#ui-datepicker-div {
+    top: 20% !important;
+    left: 40% !important;
+}
+</style>
+
+<script>
+require([
+    'jquery',
+    'mage/translate',
+    'mage/calendar',
+    'mage/validation'
+], function ($, $translate) {
+    $('#from-date').calendar({
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        currentText: $translate('Go Today'),
+        closeText: $translate('Close'),
+        showWeek: true
+    });
+    $('#to-date').calendar({
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        currentText: $translate('Go Today'),
+        closeText: $translate('Close'),
+        showWeek: true
+    });
+
+    var dataForm = $('#report_form');
+    dataForm.mage('validation', {});
+
+    $("#pagespeed_form_submit").click( function() {
+        var fromDate = $("input#from-date").val();
+        var toDate = $("input#to-date").val();
+
+        var fullDate = new Date()
+        
+        //convert month to 2 digits
+        var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) :(fullDate.getMonth()+1);
+        var currentDate = fullDate.getDate() + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
+        var isEmpty = false;
+        if(fromDate == '' && toDate == ''){
+            isEmpty = true;
+            alert("Fields can not be empty, please select any date first.");
+        }
+        if(!isEmpty){
+            var status = dataForm.validation('isValid');
+            $("#report_form").submit();
+        }
+    });
+});
+</script>
+
