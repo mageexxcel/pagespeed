@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright © 2015 Excellence. All rights reserved.
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Excellence_Pagespeed::pagespeed" title="Excellence Page Speed" module="Excellence_Pagespeed" sortOrder="30" parent="Excellence_Base::base" resource="Excellence_Base::base"/>
+        <add id="Excellence_Pagespeed::pagespeed_config" title="PageSpeed Configuration" module="Excellence_Pagespeed" sortOrder="20" parent="Excellence_Base::base" action="adminhtml/system_config/edit/section/excellence_pagespeed/" resource="Excellence_Pagespeed::config"/>
+        <add id="Excellence_ImportExport::excellence_system_convert_import" title="Import Speed Record" translate="title" module="Excellence_Pagespeed" sortOrder="10" parent="Magento_Backend::system_convert" action="pagestatic/export/index" resource="Excellence_Pagespeed::excellence_export_csv"/>
+    </menu>
+</config>
